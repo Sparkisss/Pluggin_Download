@@ -1,44 +1,101 @@
 .wrapper {
-    background-color: #666;
-    height: 100%;
+    background-color: antiquewhite;
 }
 .container {
-    padding-top: 5rem;
-    width: 800px;
+    width: 1200px;
     margin: 0 auto;
-    .card {
-        border-radius: 6px;
-        background-color: #fff;
-        padding: 1rem;
-        box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
-        .btn{
-            color: #42b983;
-            position: relative;
-            border-radius: 99px;
-            border: 1px solid #42b983;
-            text-decoration: none;
-            text-transform: uppercase;
-            padding: 0.5rem 1.5rem;
-            font-weight: 700;
-            outline: none;
+    main {
+        padding: 10px 0;
+        height: 100vh;
+        display: grid;
+        grid-gap: 1%;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-areas: 
+            "sidebar mode mode mode device device device device device device"
+            "sidebar equipment equipment equipment device device device device device device"
+            "sidebar equipment equipment equipment error_list object_data object_data object_data object_data object_data"
+            "sidebar equipment equipment equipment error_list object_data object_data object_data object_data object_data"
+        ;
+        .sidebar,
+        .mode,
+        .equipment,
+        .device,
+        .error_list,
+        .object_data{
             background-color: #fff;
-            transition: all 0.22s;
-            cursor: pointer;
-            margin-right: 1rem;
-            &:active {
-                box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
+            border:1px solid #000;
+            border-radius: 7px;
+            justify-items: center;
+            align-items: center;
+            display: grid;
+        }
+        .sidebar {
+            grid-template-rows: 1fr 3fr 1fr 1fr;
+            grid-area: sidebar;
+            .user,
+            .exit {
+                img {
+                    height: 50px;
+                }
             }
-            &:hover {
-                cursor: pointer;
-                opacity: 0.8;
+            ul {
+                li {
+                    margin-bottom: 20px;
+                    padding: 10px;
+                    text-align: center;
+                    border: 1px solid #000;
+                    &:last-child {
+                        margin-bottom: 0px;
+                    }
+                }
             }
         }
-        .primary {
-            background-color: #42b983;
-            color: #fff;
+        .mode {
+            grid-area: mode;
+            padding: 10px;
+            .mode_item {
+                width: 100%;
+                padding: 10px 0;
+                padding-left: 25px;
+                border: 1px solid #000;
+            }
+        }
+        .equipment {
+            grid-area: equipment;
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            caption {
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            
+            th, td {
+                border: 3px solid #ccc;
+                padding: 8px;
+                text-align: center;
+            }
+            
+            th {
+                background-color: #f2f2f2;
+            }
+            
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            
+        }
+        .device {
+            grid-area: device;
+        }
+        .error_list {
+            grid-area: error_list;
+        }
+        .object_data {
+            grid-area: object_data;
         }
     }
-}
-input[type=file] {
-    display: none;
 }

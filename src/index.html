@@ -3,16 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <title>Plagin download</title>
+    <title>Page of object</title>
 </head>
 <body>
     <div class="wrapper">
         <div class="container">
-            <div class="card">
-                <input type="file" id="file">
-                <!-- <button class="btn">Open</button> -->
-                <!-- <button class="btn primary">Download</button> -->
-            </div>
+            
+            <main>
+
+                <article class="sidebar">
+                    <div class="user">
+                        <img src="/src/img/icon/circle-user.svg" alt="user">
+                    </div>
+                    <ul>
+                        <li>Value</li>
+                        <li>File</li>
+                        <li>Weather</li>
+                    </ul>
+                    <div class="styleBtn">Button</div>
+                    <div class="exit">
+                        <img src="/src/img/icon/exit.svg" alt="exit">
+                    </div>
+                </article>
+
+                <article class="mode">
+                    <div class="mode_item">
+                        <input type="radio" id="auto" name="mode" value="auto" checked>
+                        <label for="auto">Auto</label>
+                    </div>
+                    <div class="mode_item">
+                        <input type="radio" id="manual" name="mode" value="manual">
+                        <label for="manual">Manual</label>
+                    </div> 
+                    <div class="mode_item">
+                        <input type="radio" id="adjustment" name="mode" value="adjustment">
+                        <label for="adjustment">Adjustment</label>
+                    </div>                 
+
+
+
+                </article>
+
+                <article class="equipment">
+                    <table>
+                        <caption>List of equipments:</caption>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Mark</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Товар 1</td>
+                                <td>Марка 1</td>
+                                <td>Новый</td>
+                            </tr>
+                            <tr>
+                                <td>Товар 2</td>
+                                <td>Марка 2</td>
+                                <td>Б/у</td>
+                            </tr>
+                            <tr>
+                                <td>Товар 1</td>
+                                <td>Марка 1</td>
+                                <td>Новый</td>
+                            </tr>
+                            <tr>
+                                <td>Товар 2</td>
+                                <td>Марка 2</td>
+                                <td>Б/у</td>
+                            </tr>
+                            <tr>
+                                <td>Товар 1</td>
+                                <td>Марка 1</td>
+                                <td>Новый</td>
+                            </tr>
+                            <tr>
+                                <td>Товар 2</td>
+                                <td>Марка 2</td>
+                                <td>Б/у</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+
+                <article class="device">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Value</th>
+                                <th>Setpoint</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Temp. sensor - supply</td>
+                                <td>51-C</td>
+                                <td>47-C</td>
+                            </tr>
+                            <tr>
+                                <td>Sensor - pressure</td>
+                                <td>OK</td>
+                                <td>OK</td>
+                            </tr>
+                            <tr>
+                                <td>Main pump</td>
+                                <td>ON</td>
+                                <td>ON</td>
+                            </tr>
+                            <tr>
+                                <td>Standby pump</td>
+                                <td>OFF</td>
+                                <td>OFF</td>
+                            </tr>
+                            <tr>
+                                <td>Control valve</td>
+                                <td>40%</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Solenoid valve</td>
+                                <td>OFF</td>
+                                <td>OFF</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+
+                <article class="error_list">
+                    Error list:
+                    <ul>
+                        <li>E1-disconnection with t1</li>
+                        <li>E2-dry running of pumps/li>
+                        <li>E3-high temperature</li>
+                        <li>E4-low temperature</li>
+                        <li>E5-disconnection with t2</li>
+                    </ul>
+                </article>
+
+                <article class="object_data">
+                    <div class="data_now">
+                        <div class="errors">No errors</div>
+                        <div class="equipments">Equipments-OK</div>
+                        <div class="temperature">Temperature outside</div>
+                    </div>
+                    <div class="setpoint">
+                        <div class="temp_setpoint">51-C</div>
+                        <div class="p_k">2.0</div>
+                        <div class="i_k">10.3</div>
+                        <div class="d_k">7.7</div>
+                    </div>
+                </article>
+
+            </main>
+
+            
         </div>
     </div>
 </body>

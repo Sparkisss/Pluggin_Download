@@ -18,13 +18,13 @@ module.exports = {
     hot: true,
   },
   entry: {
-    index: './src/index.js',
-    // page1: './src/pages.js',
+    index: './src/index.ts'
   },
+  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    filename: '[name].[contenthash].js',
+    filename: '[name].[contenthash:5].js',
     assetModuleFilename: 'assets/[name][ext]',
   },
   plugins: [
@@ -123,6 +123,16 @@ module.exports = {
           },
         },
       },
+
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 };
