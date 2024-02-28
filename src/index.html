@@ -20,7 +20,7 @@
                         <li>File</li>
                         <li>Weather</li>
                     </ul>
-                    <div class="styleBtn">Button</div>
+                    <div class="styleBtn">Theme</div>
                     <div class="exit">
                         <img src="/src/img/icon/exit.svg" alt="exit">
                     </div>
@@ -91,6 +91,7 @@
 
                 <article class="device">
                     <table>
+                        <caption>Device status:</caption>
                         <thead>
                             <tr>
                                 <th>Device</th>
@@ -133,28 +134,29 @@
                     </table>
                 </article>
 
-                <article class="error_list">
-                    Error list:
+                <article class="error_list">               
                     <ul>
-                        <li>E1-disconnection with t1</li>
-                        <li>E2-dry running of pumps/li>
-                        <li>E3-high temperature</li>
-                        <li>E4-low temperature</li>
-                        <li>E5-disconnection with t2</li>
+                        <h2>Error list:</h2>
+                        <li data-tooltip="extra information1">E1-disconnection with t1</li>
+                        <li data-tooltip="extra information2">E2-dry running of pumps/li>
+                        <li data-tooltip="extra information3">E3-high temperature</li>
+                        <li data-tooltip="extra information4">E4-low temperature</li>
+                        <li data-tooltip="extra information5">E5-disconnection with t2</li>
                     </ul>
                 </article>
 
                 <article class="object_data">
                     <div class="data_now">
-                        <div class="errors">No errors</div>
-                        <div class="equipments">Equipments-OK</div>
-                        <div class="temperature">Temperature outside</div>
-                    </div>
-                    <div class="setpoint">
-                        <div class="temp_setpoint">51-C</div>
-                        <div class="p_k">2.0</div>
-                        <div class="i_k">10.3</div>
-                        <div class="d_k">7.7</div>
+                        <h2>Status of object:</h2>
+                        <div class="errors">No errors.</div>
+                        <div class="equipments">Equipments-OK.</div>
+                        <div class="temperature">Temperature outside - 10-C</div>
+
+                        <h2>Setpoint list:</h2>
+                        <div class="temp_setpoint">Temp. setpoint - 51-C</div>
+                        <div class="p_k">P - 2.0</div>
+                        <div class="i_k">I - 10.3</div>
+                        <div class="d_k">D - 7.7</div>
                     </div>
                 </article>
 

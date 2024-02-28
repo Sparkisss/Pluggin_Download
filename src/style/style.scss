@@ -1,5 +1,5 @@
 .wrapper {
-    background-color: antiquewhite;
+    background-color: rgba(250, 235, 215, 0.692);
 }
 .container {
     width: 1200px;
@@ -14,8 +14,8 @@
         grid-template-areas: 
             "sidebar mode mode mode device device device device device device"
             "sidebar equipment equipment equipment device device device device device device"
-            "sidebar equipment equipment equipment error_list object_data object_data object_data object_data object_data"
-            "sidebar equipment equipment equipment error_list object_data object_data object_data object_data object_data"
+            "sidebar equipment equipment equipment error_list error_list object_data object_data object_data object_data"
+            "sidebar equipment equipment equipment error_list error_list object_data object_data object_data object_data"
         ;
         .sidebar,
         .mode,
@@ -45,10 +45,28 @@
                     padding: 10px;
                     text-align: center;
                     border: 1px solid #000;
+                    cursor: pointer;
                     &:last-child {
                         margin-bottom: 0px;
                     }
                 }
+            }
+            .styleBtn {
+                border: 1px solid #000;
+                padding: 10px;
+                background-color: #4b4949;
+                color: #fff;
+                cursor: pointer;
+                transition: all .22s;
+                &:hover {
+                    box-shadow: 2px 3px 3px 3px #000;
+                }
+                &:active {
+                    box-shadow: 0 0 0 0 #000;
+                }
+            }
+            img {
+                cursor:  pointer;
             }
         }
         .mode {
@@ -59,13 +77,17 @@
                 padding: 10px 0;
                 padding-left: 25px;
                 border: 1px solid #000;
+                input {
+                    cursor: pointer;
+                }
             }
         }
-        .equipment {
+        .equipment,
+        .device {
             grid-area: equipment;
             table {
                 border-collapse: collapse;
-                width: 100%;
+                width: 90%;
             }
             caption {
                 font-size: 1.5em;
@@ -93,9 +115,51 @@
         }
         .error_list {
             grid-area: error_list;
+            ul {
+                padding: 0 10px;
+                li {
+                    margin-bottom: 15px;
+                    padding: 5px;
+                    border-bottom: 1px solid #000;
+                    cursor: pointer;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
         }
         .object_data {
             grid-area: object_data;
+            .data_now {
+                div {
+                    transition: all 0.22s;
+                    cursor: pointer;
+                    margin-bottom: 5px;
+                    border: 1px solid #000;
+                    &:hover {
+                        background:#ccaeae;
+                    }
+                }
+                .temperature {
+                    margin-bottom: 20px;
+                }
+            }
         }
     }
+}
+
+h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.tooltip {
+    position: fixed;
+    padding: 15px;
+    border: 2px dashed #b3c9ce;
+    border-radius: 4px;
+    text-align: center;
+    color: #333;
+    background: #c0c0e7;
+
 }
