@@ -1,0 +1,40 @@
+{
+  "Equipment": [
+    {
+      "product_name": "Pump",
+      "Mark": "Oasis C 25/2",
+      "State": "OK"
+    },
+    {
+      "product_name": "Pump",
+      "Mark": "Oasis C 25/2",
+      "State": "OK"
+    },
+    {
+      "product_name": "Control_valve",
+      "Mark": "TRV-50-63-01",
+      "State": "OK"
+    },
+    {
+      "product_name": "Solenoid_valve",
+      "Mark": "Unipump BCX-20 3/4",
+      "State": "OK"
+    },
+    {
+      "product_name": "Temperature_sensor",
+      "Mark": "PT1000",
+      "State": "OK"
+    },
+    {
+      "product_name": "Pressure_sensor",
+      "Mark": "EKM-100BM",
+      "State": "OK"
+    }
+  ],
+  "requests": [
+    {
+      "name": "Idrak",
+      "id": 1
+    }
+  ]
+}
