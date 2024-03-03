@@ -1,3 +1,4 @@
+// список установленного оборудования из базы данных
 interface Equipment {
     product_name: string;
     Mark: string;
@@ -11,7 +12,6 @@ function fetchDataFromServer() {
         .then(data => {
             // обновляем данные на странице
             updatePageWithData(data);     
-            console.log(data[0])
         })
         .catch(error => console.error('data response error'))
 }
@@ -30,6 +30,7 @@ function updatePageWithData(data: Equipment[]) {
         }
         if(test) {
             test.appendChild(tr)
+            
         }       
     })
 }

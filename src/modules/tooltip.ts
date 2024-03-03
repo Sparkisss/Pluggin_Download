@@ -1,3 +1,4 @@
+//всплываюзее окно с ошибками
 let tooltipElem: any;
 
 document.onmouseover = function(e) {

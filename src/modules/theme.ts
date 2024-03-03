@@ -1,3 +1,4 @@
+// светдая/темная тема
 const btn = document.querySelector('.styleBtn') as HTMLElement
 const wrapper = document.querySelector('.wrapper') as HTMLElement
 

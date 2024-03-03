@@ -87,7 +87,7 @@
             grid-area: equipment;
             table {
                 border-collapse: collapse;
-                width: 90%;
+                width: 90%; 
             }
             caption {
                 font-size: 1.5em;
@@ -108,7 +108,6 @@
             tr:nth-child(even) {
                 background-color: #f9f9f9;
             }
-            
         }
         .device {
             grid-area: device;
