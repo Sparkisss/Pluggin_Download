@@ -33,7 +33,7 @@ function processData(receivedData: string): void {
             renderValue(3, 10, setpointListValue)
         } 
     } else {
-        console.log('Ошибка: Некорректное количество данных')
+        console.log('Ошибка: Некорректное количество данных' + newData.length)
     }
 }
 

@@ -30,7 +30,6 @@ function updatePageWithData(data: Equipment[]) {
         }
         if(test) {
             test.appendChild(tr)
-            
         }       
     })
 }

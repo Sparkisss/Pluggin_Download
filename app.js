@@ -19,9 +19,24 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('Клиент подключился');
+
+  // Обработка события 'LED_CONTROL' от клиента
+  socket.on('LED_CONTROL', (data) => {
+      // Отправляем данные на SerialPort
+      const command = `${data.pin},${data.value};`; // Пример: "8,1;"
+      port.write(command, (err) => {
+          if (err) {
+              console.error('Ошибка при отправке данных: ', err.message);
+          } else {
+              console.log('Данные отправлены на SerialPort: ', command);
+          }
+      });
+  });
+
+  // Обработка отключения клиента
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+      console.log('Клиент отключился');
   });
 });
 

@@ -5,6 +5,7 @@ import "./modules/theme"
 import "./modules/tooltip"
 import "./modules/postData"
 import "./modules/getDataBySerialport"
+import "./modules/sendingData"
 
 window.addEventListener('DOMContentLoaded', () => {
 

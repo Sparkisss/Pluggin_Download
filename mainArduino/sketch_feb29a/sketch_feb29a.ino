@@ -2,6 +2,7 @@
 #include "OneWire.h"
 #include "DallasTemperature.h"
 #include <ServoSmooth.h>
+#include "GParser.h"
 
 // контакт подключения выхода датчика
 #define PRESSURE_SENSOR 10
@@ -21,10 +22,11 @@ OneWire oneWire(2);
 DallasTemperature ds(&oneWire);
 // PID коэфициенты
 GyverPID pid(15.2, 0.82, 0);
-int period = 500;
+int period = 5000;
 
 void setup() {
   Serial.begin(9600);
+  Serial.setTimeout(1000);
     // настройка контакта подключения датчика давления в режим INTPUT
   pinMode(PRESSURE_SENSOR, INPUT);
   // солинойдный клапан
@@ -38,7 +40,6 @@ void setup() {
   pid.setpoint = 40;
   pid.setDt(period);
   pid.setLimits(0, 180);
-  Serial.println("input, output, setpoint");
   servo.attach(5);
   servo.setSpeed(180);   // ограничить скорость
   servo.setAccel(0.2);  	// установить ускорение (разгон и торможение)
@@ -47,6 +48,7 @@ void setup() {
 }
 
 void loop() {
+
   pressureSensor(period);
 
   static uint32_t tmr;
@@ -78,6 +80,24 @@ void loop() {
     Serial.print(pid.Kd); Serial.println(' '); 
   }
   // parsing();
+  if (Serial.available()) {
+    char str[30];
+    int amount = Serial.readBytesUntil(';', str, 30);
+    str[amount] = NULL;
+    GParser data(str, ',');
+    int ints[1];
+    int am = data.parseInts(ints);
+    
+    switch (ints[0]) {
+      case 0: digitalWrite(8, ints[1]); break; //pump 1
+      case 1: digitalWrite(9, ints[1]); break; //pump2
+      case 2: digitalWrite(7, ints[1]); break; //solinoid valve
+      case 3: pid.setpoint = ints[1]; break; //set temp
+      case 4: pid.Kp = ints[1]; break; //set P
+      case 5: pid.Ki = ints[1]; break; //set I
+      case 6: pid.Kd = ints[1]; break; //set D
+    }
+  }
 }
 
 // void parsing() {
