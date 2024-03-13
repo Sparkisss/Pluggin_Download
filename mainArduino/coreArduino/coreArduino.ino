@@ -14,14 +14,15 @@ boolean pump = true;
 // период опроса датчика давления
 int periodInfo = 5000;
 // период чередования насосов
-int periodPump = 10000; 
+int periodPump = 10000;
+int mode = 0; 
 
 ServoSmooth servo;
 // порт подключения датчика температуры 
 OneWire oneWire(2);  
 DallasTemperature ds(&oneWire);
 // PID коэфициенты
-GyverPID pid(15.2, 0.82, 0);
+GyverPID pid(15.2, 0.8, 0);
 int period = 5000;
 
 void setup() {
@@ -48,19 +49,33 @@ void setup() {
 }
 
 void loop() {
-
-  pressureSensor(period);
-
   static uint32_t tmr;
-  int percentsOut = pid.output;
-  int percentsFact = servo.getCurrentDeg();
- 
-  percentsOut = map(percentsOut, 0, 180, 0, 100);
-  percentsFact = map(percentsFact, 0, 180, 0, 100);
-
   if (millis() - tmr >= period) {
-    int deg = int(pid.output);
     tmr = millis();
+    setSerial();
+  }
+  if (mode == 0) {
+    pressureSensor(period);
+  }else if(mode == 1) {
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+    digitalWrite(7, LOW);
+  }else if(mode == 2) {
+  } else if (mode != 0 || mode != 1 || mode != 2) {
+    Serial.println('Not right value!');
+    mode = 0;
+  }
+  
+  parsing();
+}
+// Отправка данных в SerialPort
+void setSerial() {
+    int percentsOut = pid.output;
+    int percentsFact = servo.getCurrentDeg();
+    percentsOut = map(percentsOut, 0, 180, 0, 100);
+    percentsFact = map(percentsFact, 0, 180, 0, 100);
+    int deg = int(pid.output);
+
     ds.requestTemperatures();
     pid.input = ds.getTempCByIndex(0);
     pid.getResult();
@@ -78,8 +93,9 @@ void loop() {
     Serial.print(pid.Kp); Serial.print(' ');
     Serial.print(pid.Ki); Serial.print(' ');
     Serial.print(pid.Kd); Serial.println(' '); 
-  }
-  // parsing();
+}
+// Чтение данных из SerialPort и их обработка
+void parsing() {
   if (Serial.available()) {
     char str[30];
     int amount = Serial.readBytesUntil(';', str, 30);
@@ -93,25 +109,13 @@ void loop() {
       case 1: digitalWrite(9, ints[1]); break; //pump2
       case 2: digitalWrite(7, ints[1]); break; //solinoid valve
       case 3: pid.setpoint = ints[1]; break; //set temp
-      case 4: pid.Kp = ints[1]; break; //set P
-      case 5: pid.Ki = ints[1]; break; //set I
-      case 6: pid.Kd = ints[1]; break; //set D
+      case 4: pid.Kp = pid.Kp + (static_cast<float>(ints[1]) / 10.0f); break; //set P
+      case 5: pid.Ki = pid.Ki + (static_cast<float>(ints[1]) / 10.0f); break; //set I
+      case 6: pid.Kd = pid.Kd + (static_cast<float>(ints[1]) / 10.0f); break; //set D
+      case 7: mode = ints[1]; // work mode
     }
   }
 }
-
-// void parsing() {
-//   if (Serial.available() > 1) {
-//     char incoming = Serial.read();
-//     float value = Serial.parseFloat();
-//     switch (incoming) {
-//       case 'p': pid.Kp = value; break;
-//       case 'i': pid.Ki = value; break;
-//       case 'd': pid.Kd = value; break;
-//       case 's': pid.setpoint = value; break;
-//     }
-//   }
-// }
 // обработка датчика давления
 void pressureSensor(int periodInfo) {
   static uint32_t tmrPress;
