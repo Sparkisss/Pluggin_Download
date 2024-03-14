@@ -135,9 +135,6 @@
                     cursor: pointer;
                     margin-bottom: 5px;
                     border: 1px solid #000;
-                    &:hover {
-                        background:#ccaeae;
-                    }
                 }
                 .temperature {
                     margin-bottom: 20px;
@@ -160,5 +157,14 @@ h2 {
     text-align: center;
     color: #333;
     background: #c0c0e7;
+}
 
+.change {
+    background-color:#c0e7d7;
+    transition: all .3s;
+    &:hover {
+        box-shadow: 3px 3px 3px #000;
+        cursor: pointer;
+        font-weight: 900;
+    }
 }
