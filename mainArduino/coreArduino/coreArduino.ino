@@ -22,7 +22,7 @@ ServoSmooth servo;
 OneWire oneWire(2);  
 DallasTemperature ds(&oneWire);
 // PID коэфициенты
-GyverPID pid(15.2, 0.8, 0);
+GyverPID pid(15.2, 0.8, 0.1);
 int period = 5000;
 
 void setup() {
