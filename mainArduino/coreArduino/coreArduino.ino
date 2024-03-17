@@ -50,22 +50,27 @@ void setup() {
 
 void loop() {
   static uint32_t tmr;
-  if (millis() - tmr >= period) {
-    tmr = millis();
-    setSerial();
-  }
+
   if (mode == 0) {
+    if (millis() - tmr >= period) {
+      tmr = millis();
+      setSerial();
+    }
     pressureSensor(period);
   }else if(mode == 1) {
     digitalWrite(8, LOW);
     digitalWrite(9, LOW);
     digitalWrite(7, LOW);
+    
   }else if(mode == 2) {
+    if (millis() - tmr >= period) {
+      tmr = millis();
+      setSerial();
+    }
   } else if (mode != 0 || mode != 1 || mode != 2) {
     Serial.println('Not right value!');
     mode = 0;
-  }
-  
+  }  
   parsing();
 }
 // Отправка данных в SerialPort

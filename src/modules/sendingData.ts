@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const plus = document.querySelectorAll('.plus')
     const minus = document.querySelectorAll('.minus')
 
-    let setTemp = 0
-    let setP = 0
-    let setI = 0
-    let setD = 0
+    let value: number | string = 0;
 
     type CoreCommand = {
         stand: number
@@ -37,6 +34,54 @@ document.addEventListener("DOMContentLoaded", () => {
         //     socket.emit('LED_CONTROL', command)
         // });        
     })
+    // функция рендер
+    function render(selector: HTMLSpanElement,sign: string) {
+        if (selector){
+            selector.innerHTML = `${value.toString()}${sign}`
+        } 
+    }
+    //обработка нажатия кнопки
+    function dataProcessing(e: Event, i: number, operation: string) {
+        const target = e.target as HTMLElement;                    
+        const parent = target.parentNode as HTMLElement;
+        const insideSpan = parent.querySelector("span");
+        let parentInnerText = parent.innerText;                    
+        const regexp = /\d*.?\d/g                    
+        let result: any = Array.from(parentInnerText.matchAll(regexp))
+        if (e.target && i === 0 && operation === '+') {               
+            value = +result[0][0] + 1
+            if (insideSpan){
+                render(insideSpan, '&#8451') 
+            }                                  
+        }else if (e.target && operation === '+') {
+            value = ((+result[0][0] * 10) + 1) / 10
+            if (insideSpan){
+                render(insideSpan, '')
+            }                
+        }else if (e.target && i === 0 && operation === '-') {
+            value = +result[0][0] - 1
+            if (insideSpan){
+                render(insideSpan, '&#8451')
+            } 
+        }else if (e.target && operation === '-') {
+            value = ((+result[0][0] * 10) - 1) / 10
+            if (insideSpan){
+                render(insideSpan, '')
+            } 
+        }
+    }
+    // вешаем событие на кнопку + и -
+    plus.forEach((btn, i) => {
+        btn.addEventListener('click',(e)=> {
+            dataProcessing(e, i, '+')
+        } )
+    })
+    
+    minus.forEach((btn, i) => {
+        btn.addEventListener('click',(e)=> {
+            dataProcessing(e, i, '-')
+        } )
+    }) 
     // Пишем функции для режимов работы устройства
     function auto() {
         coreCommands[5].value = 11
@@ -44,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pickStyle(false, setpoint)
         pickStyle(false, adjustmentSetpoint)
         setMode(0, 7)
-
         setpoint.forEach(item => {
             item.removeEventListener('click', handleClick);
         });
@@ -54,8 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sendButton.style.display = 'block';
         pickStyle(true, setpoint);
         pickStyle(false, adjustmentSetpoint);
-        setMode(2, 7);
-    
+        setMode(2, 7);    
         setpoint.forEach((item, i) => {
             if (i != 0 && i != setpoint.length - 1)
             item.addEventListener('click', handleClick);
@@ -63,32 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function adjustment() {
+        setpoint.forEach(item => {
+            item.removeEventListener('click', handleClick);
+        });
         sendButton.style.display = 'block'
         pickStyle(true, adjustmentSetpoint)
         pickStyle(false, setpoint)
         setMode(1, 7)
-
-        setpoint.forEach(item => {
-            item.removeEventListener('click', handleClick);
-        });
-        
-        plus.forEach((item, i) => {            
-            item.addEventListener('click', (e) => {
-                if(e.target && i === 0) {      
-                    // const target = e.target as HTMLElement;
-                    console.log(++setTemp)                              
-                    // const target = e.target as HTMLElement;
-                    // const parent = target.parentNode as HTMLElement;
-                    // let parentInnerText = parent.innerText;
-                    // const regexp = /\d*.?\d/g
-                    // let result: any = Array.from(parentInnerText.matchAll(regexp))
-                    // let value: number | string = result;  
-                    // value = +result[0][0] + 1;
-                    // parentInnerText = parentInnerText.replace(regexp, value.toString())                    
-                    // setMode(value, i + 3)
-                }
-            })
-        })        
     }
 
     radioButtons.forEach((radioButton: HTMLInputElement) => {
@@ -182,16 +206,5 @@ document.addEventListener("DOMContentLoaded", () => {
     const handleClick = (item:any) => {
         setChangeManualSetpoint(item);
     };
-    // изменение данных в режими наладки
-    function setAdjustmentValue(val: number, target: HTMLElement) {        
-        const parent = target.parentNode as HTMLElement;
-        let parentInnerText = parent.innerText;
-        const regexp = /\d*.?\d/g
-        let result: any = Array.from(parentInnerText.matchAll(regexp))
-        let value: number | string = result;  
-        value = +result[0][0] + 1;
-        parentInnerText = parentInnerText.replace(regexp, value.toString())                    
-    }
-    auto()
-    
+    auto()    
 });
