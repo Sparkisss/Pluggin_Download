@@ -12,27 +12,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const minus = document.querySelectorAll('.minus')
 
     let value: number | string = 0;
+    let nigar = 0
 
     type CoreCommand = {
         stand: number
         value: number | string
     }
-    // Здесь можно задать разные значения для каждого светодиода
+    // Здесь можно задать разные значения для управления прибором
     const coreCommands: CoreCommand[] = [
-        { stand: 0, value: 1 }, // pump 1
-        { stand: 1, value: 1 }, // pump 2
-        { stand: 2, value: 1 }, // solenoid valve
-        { stand: 3, value: 18 }, // set temp
-        { stand: 4, value: 11 }, // set P
-        { stand: 5, value: 8 }, // set I
-        { stand: 6, value: 1 }, // set D
-        { stand: 7, value: 1}, // set work mode
+        { stand: 0, value: 0 }, // pump 1
+        { stand: 1, value: 0 }, // pump 2
+        { stand: 2, value: 0 }, // solenoid valve
+        { stand: 3, value: 0 }, // set temp
+        { stand: 4, value: 0 }, // set P
+        { stand: 5, value: 0 }, // set I
+        { stand: 6, value: 0 }, // set D
+        { stand: 7, value: 0}, // set work mode
     ];  
     sendButton?.addEventListener('click', () => {      
         // Отправляем команды на сервер
-        // coreCommands.forEach(command => {
-        //     socket.emit('LED_CONTROL', command)
-        // });        
+        coreCommands.forEach((command, i) => {
+            socket.emit('LED_CONTROL', command)
+        });
+        console.log(nigar)    
     })
     // функция рендер
     function render(selector: HTMLSpanElement,sign: string) {
@@ -75,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener('click',(e)=> {
             dataProcessing(e, i, '+')
         } )
+        return nigar = i+3;
     })
     
     minus.forEach((btn, i) => {
@@ -95,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function manual() {
-        sendButton.style.display = 'block';
+        sendButton.style.display = 'none'
         pickStyle(true, setpoint);
         pickStyle(false, adjustmentSetpoint);
         setMode(2, 7);    
