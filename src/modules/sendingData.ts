@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const minus = document.querySelectorAll('.minus')
 
     let value: number | string = 0;
-    let nigar = 0
+    let count = 0
 
     type CoreCommand = {
         stand: number
@@ -28,19 +28,32 @@ document.addEventListener("DOMContentLoaded", () => {
         { stand: 5, value: 0 }, // set I
         { stand: 6, value: 0 }, // set D
         { stand: 7, value: 0}, // set work mode
-    ];  
-    sendButton?.addEventListener('click', () => {      
+    ];
+
+    sendButton?.addEventListener('click', () => {   
+        count = 0     
         // Отправляем команды на сервер
-        coreCommands.forEach((command, i) => {
+        coreCommands.forEach((command) => {
             socket.emit('LED_CONTROL', command)
         });
-        console.log(nigar)    
+         
     })
     // функция рендер
-    function render(selector: HTMLSpanElement,sign: string) {
+    function render(selector: HTMLSpanElement, sign: string, index: number) {
         if (selector){
-            selector.innerHTML = `${value.toString()}${sign}`
-        } 
+            if (typeof value === 'number' && value < 0) value = 0
+            else if (typeof value === 'number' && value > 100) value = 100
+
+            selector.innerHTML = `${value.toString()}${sign}`            
+            console.log(count)
+            coreCommands.forEach((command, i) => {
+                if (i === index + 3 && i === 3) {
+                    command.value = value
+                } else if (i === index + 3 && i > 3 && i <= 6) {
+                    command.value = count
+                }
+            });              
+        }        
     }
     //обработка нажатия кнопки
     function dataProcessing(e: Event, i: number, operation: string) {
@@ -51,24 +64,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const regexp = /\d*.?\d/g                    
         let result: any = Array.from(parentInnerText.matchAll(regexp))
         if (e.target && i === 0 && operation === '+') {               
-            value = +result[0][0] + 1
+            value = +result[0][0] + 1            
             if (insideSpan){
-                render(insideSpan, '&#8451') 
+                render(insideSpan, '&#8451', i) 
             }                                  
-        }else if (e.target && operation === '+') {
+        }
+        else if (e.target && operation === '+') {
             value = ((+result[0][0] * 10) + 1) / 10
+            count++
             if (insideSpan){
-                render(insideSpan, '')
+                render(insideSpan, '', i)
             }                
-        }else if (e.target && i === 0 && operation === '-') {
+        }
+        else if (e.target && i === 0 && operation === '-') {
             value = +result[0][0] - 1
             if (insideSpan){
-                render(insideSpan, '&#8451')
+                render(insideSpan, '&#8451', i)
             } 
-        }else if (e.target && operation === '-') {
+        }
+        else if (e.target && operation === '-') {
             value = ((+result[0][0] * 10) - 1) / 10
+            count--
             if (insideSpan){
-                render(insideSpan, '')
+                render(insideSpan, '', i)
             } 
         }
     }
@@ -76,8 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     plus.forEach((btn, i) => {
         btn.addEventListener('click',(e)=> {
             dataProcessing(e, i, '+')
-        } )
-        return nigar = i+3;
+        } )        
     })
     
     minus.forEach((btn, i) => {
