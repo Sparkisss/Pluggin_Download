@@ -49,6 +49,14 @@
                     &:last-child {
                         margin-bottom: 0px;
                     }
+                    &:hover {
+                        box-shadow: 2px 3px 3px 3px #000;
+                        background-color: #c0e7d7;
+                    }
+                    &:active {
+                        box-shadow: 0 0 0 0 #000;
+                        background-color: #fff;
+                    }
                 }
             }
             .styleBtn {
@@ -149,6 +157,7 @@
                         display: none;
                         position: absolute;
                         height: 100%;
+                        cursor: pointer;
                         transition: all .3s;
                         &:hover {
                             box-shadow: 0 0 0 2px #000;
@@ -183,13 +192,18 @@ h2 {
     color: #333;
     background: #c0c0e7;
 }
-
 .change {
     background-color:#c0e7d7;
     transition: all .3s;
+    cursor: pointer;
     &:hover {
         box-shadow: 3px 3px 3px #000;
-        cursor: pointer;
         font-weight: 900;
     }
+}
+
+// другие стили для отрисовки динамических изменений
+.image{
+    height: 22px;
+    width: 22px;
 }

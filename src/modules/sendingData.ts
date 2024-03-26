@@ -34,9 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
         count = 0     
         // Отправляем команды на сервер
         coreCommands.forEach((command) => {
-            socket.emit('LED_CONTROL', command)
-        });
-         
+            if (typeof command.value === 'number' && command.value < 0) command.value = 0
+            if (typeof command.value === 'number' && command.value > 0) socket.emit('LED_CONTROL', command)            
+            command.value = 0
+        });                 
     })
     // функция рендер
     function render(selector: HTMLSpanElement, sign: string, index: number) {
@@ -45,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (typeof value === 'number' && value > 100) value = 100
 
             selector.innerHTML = `${value.toString()}${sign}`            
-            console.log(count)
             coreCommands.forEach((command, i) => {
                 if (i === index + 3 && i === 3) {
                     command.value = value
@@ -104,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }) 
     // Пишем функции для режимов работы устройства
     function auto() {
-        coreCommands[5].value = 11
         sendButton.style.display = 'none'
         pickStyle(false, setpoint)
         pickStyle(false, adjustmentSetpoint)

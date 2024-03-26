@@ -4,7 +4,7 @@ interface Equipment {
     Mark: string;
     State: string;
 }
-
+//получаем данные с сервера и отбражаем их на странице
 function fetchDataFromServer() {
     // отправка get запроса на сервер
     fetch("http://localhost:3000/Equipment")
@@ -15,7 +15,7 @@ function fetchDataFromServer() {
         })
         .catch(error => console.error('data response error'))
 }
-
+// лтлбражение данных нп странице
 function updatePageWithData(data: Equipment[]) {
     const test = document.querySelector('.listOfEquipments')
     data.forEach((item) => {

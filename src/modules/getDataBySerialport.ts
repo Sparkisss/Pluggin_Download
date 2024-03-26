@@ -37,9 +37,8 @@ function processData(receivedData: string): void {
         console.log('Ошибка: Некорректное количество данных' + newData.length)
     }
 }
-
-function renderValue(element:number, value:number, selector:any) {
-    
+// отображение данных на экране
+function renderValue(element:number, value:number, selector:any) {    
     if (value === 0 || value === 1) {
         selector[element].innerHTML = `${data[value]}&#8451`
     }else if (value >= 2 && value <=5) {
@@ -52,7 +51,7 @@ function renderValue(element:number, value:number, selector:any) {
         selector[element].innerHTML = `${data[value]}&#37`
     }else selector[element].innerHTML = `${data[value]}`
 }
-
+//получаем данные
 socket.on('data', (data) => {
     processData(data)
 });
