@@ -8,6 +8,7 @@ import "./modules/getDataBySerialport"
 import "./modules/sendingData"
 import "./modules/listenerSidebarButton"
 import "./modules/APIweather"
+import "./modules/clock"
 
 window.addEventListener('DOMContentLoaded', () => {
 

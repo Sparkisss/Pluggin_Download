@@ -1,4 +1,5 @@
 import {chancheInnerEquipment} from './weatherSlide';
+import {checkWeather} from './APIweather'
 
 document.addEventListener("DOMContentLoaded", () => {    
     const btnList = document.querySelector('.sidebar') as HTMLElement    
@@ -6,9 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
     btnList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement
         if (target.textContent === 'Value') {
-            console.log('Value')            
-        } else if (target.textContent === 'Weather') {
-            chancheInnerEquipment()            
+            removeBtnStyle()
+            btnStyle(target)            
+        } else if (target.textContent === 'Weather') {            
+            chancheInnerEquipment()
+            checkWeather()
+            removeBtnStyle()
+            btnStyle(target)
         }
     })
+//стили нажатой кнопки
+    function removeBtnStyle() {
+        const btn = document.querySelectorAll('.sidebar ul li')
+        btn.forEach(button => {
+            button.classList.remove('btnStyle')
+        })
+    }
+    function btnStyle(target: HTMLElement) {
+        target.classList.add('btnStyle')
+    }
 });

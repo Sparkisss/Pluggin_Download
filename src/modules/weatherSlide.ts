@@ -1,6 +1,9 @@
+import {formatDate} from "./clock"
+
 const articleEquipment = document.querySelector('.equipment') as HTMLElement
 const container = document.createElement('div')
 let sliderNumber: number = 0 
+const now = new Date()
 //создаем элементы для отображения дней недели и стрелки для управления
 export function chancheInnerEquipment() {    
     const arrowUp = document.createElement('img')
@@ -18,19 +21,19 @@ export function chancheInnerEquipment() {
         articleEquipment.innerHTML = ''
         articleEquipment.appendChild(arrowUp)
         articleEquipment.appendChild(container)
-        addDate(container, 0)
+        addDate(container, sliderNumber)
         articleEquipment.appendChild(arrowDown)
     }
 }
 //отрисовка новых элементов слайда и удаление старых
-function addDate(selector: Element, num: number) {
+function addDate(selector: any, num: number) {
     selector.innerHTML = ''
 
-    const divs: HTMLDivElement[] = []
-    for (let i = num; i < 7 + num; i++) {
-        divs[i] = document.createElement('div')
-        divs[i].textContent = `${i + 1}`
-        selector.appendChild(divs[i])
+    // const divs: HTMLDivElement[] = []
+    for (let i = 0; i < 7; i++) {
+        selector[i] = document.createElement('div')
+        selector[i].textContent = `${i + 1}`      
+        selector.appendChild(selector[i])
     }
 }
 //логика отображения элементов
@@ -39,6 +42,7 @@ articleEquipment.addEventListener('click', (e) => {
 
     if (target.alt === 'up') {
         sliderNumber += 7
+        console.log(getLastWeekDates(sliderNumber));
         addDate(container, sliderNumber)
     }
     if (target.alt === 'down') {
@@ -46,3 +50,30 @@ articleEquipment.addEventListener('click', (e) => {
         addDate(container, sliderNumber)
     }
 })
+
+
+
+
+function getLastWeekDates(num: number) {
+
+    const dates = [];
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // Получаем день недели от 0 (воскресенье) до 6 (суббота)
+  
+    // Перебираем последние 7 дней
+    for (let i = num; i < 7 + num; i++) {
+      // Копируем текущую дату
+      const date = new Date(today);
+      // Вычитаем нужное количество дней, чтобы получить дату за прошлую неделю
+      date.setDate(date.getDate() - (dayOfWeek + i));
+      // Форматируем дату и добавляем в массив
+      dates.push(formatDate(date, false));
+    }  
+    return dates.reverse(); // Переворачиваем массив, чтобы даты шли по порядку
+  }
+  
+
+  
+//   Использование функции
+  console.log(getLastWeekDates(sliderNumber));
+  
