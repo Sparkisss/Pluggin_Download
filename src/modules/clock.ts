@@ -5,6 +5,7 @@
         let year = date.getFullYear();
         let hours = date.getHours();
         let minutes = date.getMinutes();
+        let dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()]; // Получаем день недели
         let result =''
         // Добавляем ноль перед числами меньше 10
         day = day < 10 ? '0' + day : day;
@@ -14,7 +15,7 @@
         if (flag) {
             result = `${day}.${month}.${year} ${hours}:${minutes}`;
         }else if (!flag){
-            result = `${day}.${month}.${year}`
+            result = `${year}-${month}-${day} ${dayOfWeek}`
         }
         return result
     }  

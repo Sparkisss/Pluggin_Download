@@ -114,9 +114,15 @@ void parsing() {
       case 1: digitalWrite(9, ints[1]); break; //pump2
       case 2: digitalWrite(7, ints[1]); break; //solinoid valve
       case 3: pid.setpoint = ints[1]; break; //set temp
-      case 4: pid.Kp = pid.Kp + (static_cast<float>(ints[1]) / 10.0f); break; //set P
-      case 5: pid.Ki = pid.Ki + (static_cast<float>(ints[1]) / 10.0f); break; //set I
-      case 6: pid.Kd = pid.Kd + (static_cast<float>(ints[1]) / 10.0f); break; //set D
+      case 4: 
+        pid.Kp = (pid.Kp + (static_cast<float>(ints[1]) / 10.0f)) > 0 ? (pid.Kp + (static_cast<float>(ints[1]) / 10.0f)) : 0.0f; 
+        break; //set P
+      case 5: 
+        pid.Ki = (pid.Ki + (static_cast<float>(ints[1]) / 10.0f)) > 0 ? (pid.Ki + (static_cast<float>(ints[1]) / 10.0f)) : 0.0f; 
+        break; //set I
+      case 6: 
+        pid.Kd = (pid.Kd + (static_cast<float>(ints[1]) / 10.0f)) > 0 ? (pid.Kd + (static_cast<float>(ints[1]) / 10.0f)) : 0.0f; 
+        break; //set D
       case 7: mode = ints[1]; // work mode
     }
   }

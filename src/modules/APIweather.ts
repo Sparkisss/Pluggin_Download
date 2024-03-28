@@ -1,11 +1,11 @@
 import { updateDateTime } from "./clock"
 
-const apiKey = 'c3ce5c27c2eab8287f2be14870b310cb'
+export const apiKey = 'c3ce5c27c2eab8287f2be14870b310cb'
 
 const apiUrl = 
     `https://api.openweathermap.org/data/2.5/weather?units=metric&q=brest&appid=${apiKey}`
 
-const articleWeatherNow = document.querySelector('.error_list') as HTMLElement
+const articleWeatherNow = document.querySelector('.equipment') as HTMLElement
 //получаем данные
 export async function checkWeather() {
     const response = await fetch(apiUrl)

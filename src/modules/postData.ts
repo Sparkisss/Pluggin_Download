@@ -33,7 +33,6 @@ function updatePageWithData(data: Equipment[]) {
         }       
     })
 }
-
 fetchDataFromServer()
 
 

@@ -34,8 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         count = 0     
         // Отправляем команды на сервер
         coreCommands.forEach((command) => {
-            if (typeof command.value === 'number' && command.value < 0) command.value = 0
-            if (typeof command.value === 'number' && command.value > 0) socket.emit('LED_CONTROL', command)            
+            if (typeof command.value === 'number' && command.value != 0) socket.emit('LED_CONTROL', command)            
             command.value = 0
         });                 
     })

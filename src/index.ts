@@ -9,6 +9,7 @@ import "./modules/sendingData"
 import "./modules/listenerSidebarButton"
 import "./modules/APIweather"
 import "./modules/clock"
+import "./modules/APIForecast"
 
 window.addEventListener('DOMContentLoaded', () => {
 

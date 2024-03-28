@@ -2,8 +2,11 @@ import {chancheInnerEquipment} from './weatherSlide';
 import {checkWeather} from './APIweather'
 
 document.addEventListener("DOMContentLoaded", () => {    
-    const btnList = document.querySelector('.sidebar') as HTMLElement    
+    const btnList = document.querySelector('.sidebar') as HTMLElement
+    const value = document.querySelector('.value') as HTMLElement   
 
+    value.classList.add('btnStyle')
+    
     btnList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement
         if (target.textContent === 'Value') {
