@@ -1,5 +1,6 @@
 import {formatDate} from "./clock"
 import {checkForecastWeather} from "./APIForecast"
+import { renderTable } from "./forecastTable"
 
 const articleEquipment = document.querySelector('.error_list') as HTMLElement
 const articleObjectData = document.querySelector('.data_now') as HTMLElement
@@ -40,22 +41,37 @@ export function addDate(selector: HTMLElement, dates: any, clean: boolean): void
 //логика отображения элементов
 articleEquipment.addEventListener('click', (e) => {
     const target = e.target as HTMLImageElement
+    let flag: boolean = false
 
     if (target.alt === 'up') {
         sliderNumber += 1
-        if (sliderNumber >= 4) sliderNumber = 4
-        addDate(container, getLastWeekDates(sliderNumber), true)
-        addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
-        selectorDate = articleObjectData.innerText
-        checkForecastWeather(selectorDate)
+        if (sliderNumber > 4) {
+            sliderNumber = 4
+            flag = true
+        } else flag = false
+        console.log(flag)
+        console.log(sliderNumber)
+        if (!flag) {
+            addDate(container, getLastWeekDates(sliderNumber), true)
+            addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
+            selectorDate = articleObjectData.innerText
+            renderTable(checkForecastWeather(selectorDate), selectorDate)
+        }
     }
     if (target.alt === 'down') {
         sliderNumber -= 1
-        if (sliderNumber <= 0 ) sliderNumber = 0
-        addDate(container, getLastWeekDates(sliderNumber), true)
-        addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
-        selectorDate = articleObjectData.innerText
-        checkForecastWeather(selectorDate)
+        if (sliderNumber < 0 ){
+            sliderNumber = 0
+            flag = true
+        } else flag = false
+        console.log(flag)
+        console.log(sliderNumber)
+        if (!flag) {
+            addDate(container, getLastWeekDates(sliderNumber), true)
+            addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
+            selectorDate = articleObjectData.innerText
+            renderTable(checkForecastWeather(selectorDate), selectorDate)
+        }
     }
 })
 

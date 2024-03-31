@@ -1,5 +1,4 @@
 import { updateDateTime } from "./clock"
-
 export const apiKey = 'c3ce5c27c2eab8287f2be14870b310cb'
 
 const apiUrl = 
@@ -10,32 +9,39 @@ const articleWeatherNow = document.querySelector('.equipment') as HTMLElement
 export async function checkWeather() {
     const response = await fetch(apiUrl)
     const data = await response.json()
-    const entries = Object.entries(data.main)
-    const windEntries = Object.entries(data.wind)
+    const entries = Object.values(data.main)
+    const windEntries = Object.values(data.wind)
     renderWeatherNow (entries, windEntries)
 }
 //отрисовка данных на страницу и времени
 function renderWeatherNow (dataOfWeather: unknown[], dataOfWind: unknown[]) {
     articleWeatherNow.innerHTML = ''
-    let clock: HTMLDivElement = document.createElement('div')
-    let temp: HTMLDivElement = document.createElement('div')
-    let feelsTemp: HTMLDivElement = document.createElement('div')
-    let pressure: HTMLDivElement = document.createElement('div')
-    let humidity: HTMLDivElement = document.createElement('div')
-    let windSpeed: HTMLDivElement = document.createElement('div')
-    updateDateTime(clock)
-    setInterval(()=>updateDateTime(clock), 60000);
-    if (Array.isArray(dataOfWeather)) {
-        temp.textContent = (dataOfWeather[0] as (string | number)[]).join(' - ') + '°C';
-        feelsTemp.textContent = (dataOfWeather[1] as (string | number)[]).join(' - ') + '°C'
-        pressure.textContent = (dataOfWeather[4] as (string | number)[]).join(' - ') + 'Pa'
-        humidity.textContent = (dataOfWeather[5] as (string | number)[]).join(' - ') + '%'
-        windSpeed.textContent = (dataOfWind[0] as (string | number)[]).join(' - ') + 'm/s'
-    }
-    articleWeatherNow.appendChild(clock)    
-    articleWeatherNow.appendChild(temp)
-    articleWeatherNow.appendChild(feelsTemp)
-    articleWeatherNow.appendChild(pressure)
-    articleWeatherNow.appendChild(humidity)
-    articleWeatherNow.appendChild(windSpeed)
+    const data = [
+        {name: 'Temp:', value: dataOfWeather[0], sign: '°C'},
+        {name: 'Fells like:', value: dataOfWeather[1], sign: '°C'},
+        {name: 'Pressure:', value: dataOfWeather[4], sign: 'Pa'},
+        {name: 'Humidity:', value: dataOfWeather[5], sign: '%'},
+        {name: 'Wind speed', value: dataOfWind[0], sign: 'm/s'},     
+    ]
+    const clock: HTMLDivElement = document.createElement('div')
+    const screen = document.createElement('div')    
+    const time = document.createElement('div')
+
+    clock.classList.add('wrap')
+    screen.classList.add('display')
+    time.id = 'time'
+
+    updateDateTime(time)
+    setInterval(()=>updateDateTime(time), 60000);
+
+    articleWeatherNow.appendChild(clock)
+    clock.appendChild(screen)
+    screen.appendChild(time)
+
+    data.forEach(data => {
+        const div = document.createElement('div')
+        div.textContent = `${data.name} - ${data.value}${data.sign}`
+        div.classList.add('wraps')
+        articleWeatherNow.appendChild(div)
+    })
 }

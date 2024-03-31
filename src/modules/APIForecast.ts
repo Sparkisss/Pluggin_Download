@@ -1,5 +1,5 @@
 import { apiKey } from "./APIweather"
-import { getLastWeekDates, addDate } from "./weatherSlide"
+import { addDate } from "./weatherSlide"
 
 const forecastPlace = document.querySelector('.data_now') as HTMLElement
 
@@ -17,6 +17,8 @@ export async function checkForecastWeather(fileDate:string) {
             addDate(forecastPlace, value, false)
         }
     }
+    
+    return getTableForecast(fileDate, forecastDate)
 }
 
 interface WeatherData {
@@ -91,4 +93,14 @@ function getDayForecast(selectorDate: string, arr: WeatherData[]) {
         }
     });
     return setOfData
+}
+
+function getTableForecast(selectorDate: string, arr: WeatherData[]) {
+    const arrTableForecastData: number[] = []
+    arr.forEach(arrItem => {
+        if (typeof arrItem.dt_txt === 'string' && selectorDate.split(' ')[0] === arrItem.dt_txt.split(' ')[0]) {
+            arrTableForecastData.push(arrItem.main.temp)
+        }
+    })
+    return arrTableForecastData
 }

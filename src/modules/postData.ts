@@ -5,7 +5,7 @@ interface Equipment {
     State: string;
 }
 //получаем данные с сервера и отбражаем их на странице
-function fetchDataFromServer() {
+export function fetchDataFromServer() {
     // отправка get запроса на сервер
     fetch("http://localhost:3000/Equipment")
         .then(response => response.json())
@@ -33,7 +33,6 @@ function updatePageWithData(data: Equipment[]) {
         }       
     })
 }
-fetchDataFromServer()
 
 
 
