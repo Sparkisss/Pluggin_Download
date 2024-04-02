@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const adjustmentSetpoint = document.querySelectorAll('.adjustment')
     const plus = document.querySelectorAll('.plus')
     const minus = document.querySelectorAll('.minus')
-
+    const modeItem = document.querySelectorAll('.mode_item') as NodeListOf<Element>
     let value: number | string = 0;
     let count = 0
 
@@ -101,9 +101,17 @@ document.addEventListener("DOMContentLoaded", () => {
             dataProcessing(e, i, '-')
         } )
     }) 
+    //стили выбора режима
+    function setStyleOfMode(num: number, selector: NodeListOf<Element>) {
+        selector.forEach((item, i) => {
+            if (i === num) item.classList.add('checked')
+            else item.classList.remove('checked')
+        })
+    }
     // Пишем функции для режимов работы устройства
     function auto() {
         sendButton.style.display = 'none'
+        setStyleOfMode(0, modeItem)
         pickStyle(false, setpoint)
         pickStyle(false, adjustmentSetpoint)
         setMode(0, 7)
@@ -114,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function manual() {
         sendButton.style.display = 'none'
+        setStyleOfMode(1, modeItem)
         pickStyle(true, setpoint);
         pickStyle(false, adjustmentSetpoint);
         setMode(2, 7);    
@@ -128,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
             item.removeEventListener('click', handleClick);
         });
         sendButton.style.display = 'block'
+        setStyleOfMode(2, modeItem)
         pickStyle(true, adjustmentSetpoint)
         pickStyle(false, setpoint)
         setMode(1, 7)

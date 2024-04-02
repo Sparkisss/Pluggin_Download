@@ -41,11 +41,13 @@
             }
             ul {
                 li {
+                    transition: all .22s;
                     margin-bottom: 20px;
                     padding: 10px;
                     text-align: center;
                     border: 2px solid #000;
                     cursor: pointer;
+                    border-radius: 5px;
                     &:last-child {
                         margin-bottom: 0px;
                     }
@@ -81,10 +83,11 @@
             grid-area: mode;
             padding: 10px;
             .mode_item {
-                width: 100%;
-                padding: 10px 0;
+                width: 90%;
+                padding: 7px 0;
                 padding-left: 25px;
                 border: 2px solid #000;
+                border-radius: 5px;
                 input {
                     cursor: pointer;
                 }
@@ -281,6 +284,10 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.checked{
+    background: linear-gradient(135deg, #bbc9df, #858a92, #4f555e);
 }
 
 @keyframes animate {

@@ -9,16 +9,14 @@ const apiForecastKeyUrl =
 export async function checkForecastWeather(fileDate:string) {
     const response = await fetch(apiForecastKeyUrl)
     const data = await response.json()
-    const forecastDate = data.list
-    let ourDate: any = getDayForecast(fileDate, forecastDate)
+    let ourDate: any = getDayForecast(fileDate, data.list)
     for (const key in ourDate) {
         if (ourDate.hasOwnProperty(key)) {
             const value = ourDate[key];
             addDate(forecastPlace, value, false)
         }
-    }
-    
-    return getTableForecast(fileDate, forecastDate)
+    }    
+    return getTableForecast(fileDate, data.list)
 }
 
 interface WeatherData {
