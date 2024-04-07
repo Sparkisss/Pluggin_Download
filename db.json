@@ -31,6 +31,38 @@
       "State": "OK"
     }
   ],
+  "DeviceStatus": [
+    {
+      "Device": "Temp. sensor - supply",
+      "Value": "...init",
+      "Setpoint": "...init"
+    },
+    {
+      "Device": "Sensor - pressure",
+      "Value": "...init",
+      "Setpoint": "-"
+    },
+    {
+      "Device": "Main pump",
+      "Value": "...init",
+      "Setpoint": "...init"
+    },
+    {
+      "Device": "Standby pump",
+      "Value": "...init",
+      "Setpoint": "...init"
+    },
+    {
+      "Device": "Solenoid valve",
+      "Value": "...init",
+      "Setpoint": "...init"
+    },
+    {
+      "Device": "Control valve",
+      "Value": "...init",
+      "Setpoint": "...init"
+    }
+  ],
   "requests": [
     {
       "name": "Idrak",

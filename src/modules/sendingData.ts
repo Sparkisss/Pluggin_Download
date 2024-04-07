@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // добавляем стили при изменении режима
     function pickStyle(act:boolean, selector: NodeListOf<Element>){
         selector.forEach((item, i) => {
-            if (selector === setpoint) {
+            if (selector === setpoint) {                
                 if(act && i != 0 && i != setpoint.length - 1) {
                     item.classList.add('change')
                 } else item.classList.remove('change')

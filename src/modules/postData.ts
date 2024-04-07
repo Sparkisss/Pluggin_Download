@@ -1,8 +1,17 @@
-// список установленного оборудования из базы данных
+// список установленного оборудования и девайсов из базы данных 
+const hostEquipment = "http://localhost:3000/Equipment"
+const hostDeviceStatus = "http://localhost:3000/DeviceStatus"
+
 interface Equipment {
     product_name: string;
     Mark: string;
     State: string;
+}
+
+interface DeviceStatus {
+    Device: string;
+    Value: string;
+    Setpoint: string;
 }
 //получаем данные с сервера и отбражаем их на странице
 export function fetchDataFromServer() {
@@ -11,12 +20,12 @@ export function fetchDataFromServer() {
         .then(response => response.json())
         .then(data => {
             // обновляем данные на странице
-            updatePageWithData(data);     
+            updatePageWithEquipment(data);     
         })
         .catch(error => console.error('data response error'))
 }
-// лтлбражение данных нп странице
-function updatePageWithData(data: Equipment[]) {
+// отображение данных на странице
+function updatePageWithEquipment(data: Equipment[]) {
     const test = document.querySelector('.listOfEquipments')
     data.forEach((item) => {
         const tr = document.createElement('tr')
@@ -33,6 +42,8 @@ function updatePageWithData(data: Equipment[]) {
         }       
     })
 }
+
+
 
 
 

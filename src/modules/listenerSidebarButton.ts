@@ -2,15 +2,17 @@ import {chancheInnerEquipment} from './weatherSlide';
 import {checkWeather} from './APIweather'
 import {renderTable} from './forecastTable'
 import {checkForecastWeather} from './APIForecast';
-import { renderErrorsList, renderListOfEquipments } from './renderValuePage';
+import { renderErrorsList, renderListOfEquipments} from './renderValuePage';
 
 document.addEventListener("DOMContentLoaded", () => {    
     const btnList = document.querySelector('.sidebar') as HTMLElement
-    const value = document.querySelector('.value') as HTMLElement   
+    const value = document.querySelector('.value') as HTMLElement
+    const equipments = document.querySelector('.equipment') as HTMLElement
+    const device = document.querySelector('.device') as HTMLElement   
 
     value.classList.add('btnStyle')
     renderErrorsList()
-    renderListOfEquipments()
+    renderListOfEquipments(equipments)
     
     btnList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement
@@ -18,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
             removeBtnStyle()
             btnStyle(target)
             renderErrorsList()
-            renderListOfEquipments()           
+            renderListOfEquipments(equipments)
+            // renderListOfEquipments(device) 
         } else if (target.textContent === 'Weather') {
             chancheInnerEquipment()
             checkWeather()

@@ -3,8 +3,8 @@ import { io } from "socket.io-client"
 
 const socket = io("http://localhost:8000")      
 
-const deviceValue = document.querySelectorAll('.device .value')
-const deviceSetpoint = document.querySelectorAll('.device .setpoint')
+// const deviceValue = document.querySelectorAll('.device .value')
+// const deviceSetpoint = document.querySelectorAll('.device .setpoint')
 const setpointListValue = document.querySelectorAll('.data_now .data_now-value')
 
 const ARRAY_SIZE = 12; // Размер массива
@@ -12,6 +12,8 @@ let data: number[] = new Array(ARRAY_SIZE).fill(0) // Создаем и иниц
 
 // Функция для обработки полученных данных
 function processData(receivedData: string): void {
+    const deviceValue = document.querySelectorAll('.device .value')
+    const deviceSetpoint = document.querySelectorAll('.device .setpoint')
     let newData = receivedData.split(' ').map(Number)
 
     if (newData.length === ARRAY_SIZE) {
