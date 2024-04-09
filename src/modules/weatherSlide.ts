@@ -3,7 +3,6 @@ import {checkForecastWeather} from "./APIForecast"
 import { renderTable } from "./forecastTable"
 
 const articleEquipment = document.querySelector('.error_list') as HTMLElement
-const articleObjectData = document.querySelector('.data_now') as HTMLElement
 const container = document.createElement('div')
 let sliderNumber: number = 0;
 let selectorDate: string = ''
@@ -26,7 +25,7 @@ export function chancheInnerEquipment() {
         articleEquipment.appendChild(arrowUp)
         articleEquipment.appendChild(container)
         addDate(container, getLastWeekDates(sliderNumber), true)
-        addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
+        // addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
         articleEquipment.appendChild(arrowDown)
     }
 }
@@ -49,14 +48,10 @@ articleEquipment.addEventListener('click', (e) => {
             sliderNumber = 4
             flag = true
         } else flag = false
-        console.log(flag)
-        console.log(sliderNumber)
         if (!flag) {
             addDate(container, getLastWeekDates(sliderNumber), true)
-            addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
-            selectorDate = articleObjectData.innerText
-            renderTable(checkForecastWeather(selectorDate), selectorDate)
-        }
+            const getDate = document.querySelector('.error_list div div') as HTMLElement
+            renderTable(checkForecastWeather(getDate.innerText), getDate.innerText)        }
     }
     if (target.alt === 'down') {
         sliderNumber -= 1
@@ -64,13 +59,10 @@ articleEquipment.addEventListener('click', (e) => {
             sliderNumber = 0
             flag = true
         } else flag = false
-        console.log(flag)
-        console.log(sliderNumber)
         if (!flag) {
             addDate(container, getLastWeekDates(sliderNumber), true)
-            addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
-            selectorDate = articleObjectData.innerText
-            renderTable(checkForecastWeather(selectorDate), selectorDate)
+            const getDate = document.querySelector('.error_list div div') as HTMLElement
+            renderTable(checkForecastWeather(getDate.innerText), getDate.innerText)           
         }
     }
 })
@@ -82,7 +74,7 @@ export function getLastWeekDates(num: number) {
     // Вычитаем нужное количество дней, чтобы получить дату за прошлую неделю
     date.setDate(date.getDate() + (num + 1));
     // Форматируем дату
-    return formatDate(date, false)
+    return formatDate(date, 'dayOfWeek')
 }
 
   

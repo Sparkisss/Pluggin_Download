@@ -1,17 +1,8 @@
 // список установленного оборудования и девайсов из базы данных 
-const hostEquipment = "http://localhost:3000/Equipment"
-const hostDeviceStatus = "http://localhost:3000/DeviceStatus"
-
 interface Equipment {
     product_name: string;
     Mark: string;
     State: string;
-}
-
-interface DeviceStatus {
-    Device: string;
-    Value: string;
-    Setpoint: string;
 }
 //получаем данные с сервера и отбражаем их на странице
 export function fetchDataFromServer() {

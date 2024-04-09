@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sendButton = document.querySelector('.sendBtn') as HTMLElement
     const radioButtons: NodeListOf<HTMLInputElement> = document.querySelectorAll('input[type="radio"]')
-    const setpoint = document.querySelectorAll('.setpoint')
+    const setpoint: NodeListOf<Element> = document.querySelectorAll('.setpoint')
     const adjustmentSetpoint = document.querySelectorAll('.adjustment')
     const plus = document.querySelectorAll('.plus')
     const minus = document.querySelectorAll('.minus')
@@ -112,34 +112,24 @@ document.addEventListener("DOMContentLoaded", () => {
     function auto() {
         sendButton.style.display = 'none'
         setStyleOfMode(0, modeItem)
-        pickStyle(false, setpoint)
         pickStyle(false, adjustmentSetpoint)
         setMode(0, 7)
-        setpoint.forEach(item => {
-            item.removeEventListener('click', handleClick);
-        });
+        setStyleManual (false)
     }
 
     function manual() {
         sendButton.style.display = 'none'
         setStyleOfMode(1, modeItem)
-        pickStyle(true, setpoint);
         pickStyle(false, adjustmentSetpoint);
         setMode(2, 7);    
-        setpoint.forEach((item, i) => {
-            if (i != 0 && i != setpoint.length - 1)
-            item.addEventListener('click', handleClick);
-        });
+        setStyleManual (true)
     }
     
     function adjustment() {
-        setpoint.forEach(item => {
-            item.removeEventListener('click', handleClick);
-        });
+        setStyleManual (false)
         sendButton.style.display = 'block'
         setStyleOfMode(2, modeItem)
         pickStyle(true, adjustmentSetpoint)
-        pickStyle(false, setpoint)
         setMode(1, 7)
     }
 
@@ -155,57 +145,71 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
     // вспомогательные функции
+    // новая функция изменения режима работы 
+    function setStyleManual (status: boolean) {
+        const setpoint = document.querySelectorAll('.setpoint')
+        if (status) {
+            setpoint.forEach((item: Element, i) => {
+                if(i != 0 && i != setpoint.length - 1) {
+                    item.classList.add('change')
+                }
+                if (i != 0 && i != setpoint.length - 1)
+                    item.addEventListener('click', handleClick);
+            }) 
+        } else {
+            setpoint.forEach((item: Element, i) => {
+                if(i != 0 && i != setpoint.length - 1) {
+                    item.classList.remove('change')
+                }
+                item.removeEventListener('click', handleClick);
+            });
+        }
+
+    }
     // добавляем стили при изменении режима
     function pickStyle(act:boolean, selector: NodeListOf<Element>){
         selector.forEach((item, i) => {
-            if (selector === setpoint) {                
-                if(act && i != 0 && i != setpoint.length - 1) {
-                    item.classList.add('change')
-                } else item.classList.remove('change')
-            }else if (selector === adjustmentSetpoint) {
-                if(act) {
-                    item.classList.add('change')
+            if(act) {
+                item.classList.add('change')
 
-                    selector.forEach((item: Element) => {
-                        if (item instanceof HTMLElement) {
-                            item.style.border = "3px solid #000"
-                        }
-                    });
+                selector.forEach((item: Element) => {
+                    if (item instanceof HTMLElement) {
+                        item.style.border = "3px solid #000"
+                    }
+                });
 
-                    plus.forEach((item: Element) => {
-                        if (item instanceof HTMLElement) {
-                            item.style.display = "block"
-                        }
-                    })
+                plus.forEach((item: Element) => {
+                    if (item instanceof HTMLElement) {
+                        item.style.display = "block"
+                    }
+                })
 
-                    minus.forEach((item: Element) => {
-                        if (item instanceof HTMLElement) {
-                            item.style.display = "block"
-                        }
-                    })
-                    
-                }else {
-                    item.classList.remove('change')
+                minus.forEach((item: Element) => {
+                    if (item instanceof HTMLElement) {
+                        item.style.display = "block"
+                    }
+                })              
+            }else {
+                item.classList.remove('change')
 
-                    selector.forEach((item: Element) => {
-                        if (item instanceof HTMLElement) {
-                            item.style.border = "1px solid #000";
-                        }
-                    });
+                selector.forEach((item: Element) => {
+                    if (item instanceof HTMLElement) {
+                        item.style.border = "1px solid #000";
+                    }
+                });
 
-                    plus.forEach((item: Element) => {
-                        if (item instanceof HTMLElement) {
-                            item.style.display = "none"
-                        }
-                    })
+                plus.forEach((item: Element) => {
+                    if (item instanceof HTMLElement) {
+                        item.style.display = "none"
+                    }
+                })
 
-                    minus.forEach((item: Element) => {
-                        if (item instanceof HTMLElement) {
-                            item.style.display = "none"
-                        }
-                    })
-                }
-            }
+                minus.forEach((item: Element) => {
+                    if (item instanceof HTMLElement) {
+                        item.style.display = "none"
+                    }
+                })
+            }            
        })
     }
     // отправляем данные об изменении режима работы устройства

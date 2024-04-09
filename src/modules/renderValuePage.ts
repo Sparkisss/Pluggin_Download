@@ -78,56 +78,69 @@ export function renderListOfEquipments(selector: HTMLElement) {
     const tr = document.createElement('tr')
     const tblBody = document.createElement('tbody')
 
-    if (selector.classList.contains('equipment')) {
-        capt.innerText = 'List of equipments:'
-        thLabelEquipment.forEach(label => {
-            const th = document.createElement('th')
-            th.textContent = `${label.name}`
-            tr.appendChild(th)
-        })
-    
-        tblBody.classList.add('listOfEquipments')
-        tbl.appendChild(tblBody)
-    
-        fetchDataFromServer()
-    }else if (selector.classList.contains('device')) {
-        capt.innerText = 'Device status:'
+    capt.innerText = 'List of equipments:'
+    thLabelEquipment.forEach(label => {
+        const th = document.createElement('th')
+        th.textContent = `${label.name}`
+        tr.appendChild(th)
+    })
 
-        thLabelDevice.forEach(label => {
-            const th = document.createElement('th')
-            th.textContent = `${label.name}`
-            tr.appendChild(th)
-        })
+    tblBody.classList.add('listOfEquipments')
+    tbl.appendChild(tblBody)
 
-        dataDeviceStatus.forEach((item: any, i) => {
-            const tr = document.createElement('tr')
-
-            if(tr && i === 0 || i === 5) {
-                tr.innerHTML = `                
-                    <td>${item[0]}</td>
-                    <td class="value">${item[1]}</td>
-                    <td class="setpoint">${item[2]}</td>                  
-                `
-            } else if (tr && i === 1) {
-                tr.innerHTML = `                
-                    <td>${item[0]}</td>
-                    <td class="value">${item[1]}</td>
-                    <td>${item[2]}</td>                  
-                `
-            } else if (tr && i >=2 && i <=4) {
-                tr.innerHTML = `                
-                    <td>${item[0]}</td>
-                    <td class="value">${item[1]}</td>
-                    <td class="setpoint" id="${i - 2}">${item[2]}</td>                  
-                `
-            }
-            tbl.appendChild(tr)
-        })
-
-    }
+    fetchDataFromServer()
     
     selector.appendChild(tbl)
     tbl.appendChild(capt)
     tbl.appendChild(tHeader)
     tHeader.appendChild(tr)
+}
+
+export function renderDeviceStatus(selector: HTMLElement) {
+    selector.innerHTML = ''
+
+    const tbl = document.createElement('table')
+    const capt = document.createElement('caption')
+    const tHeader = document.createElement('thead')
+    const tr = document.createElement('tr')
+    const tblBody = document.createElement('tbody')
+    capt.innerText = 'Device status:'
+
+    thLabelDevice.forEach(label => {
+        const th = document.createElement('th')
+        th.textContent = `${label.name}`
+        tr.appendChild(th)
+    })
+
+    dataDeviceStatus.forEach((item: any, i) => {
+        const tr = document.createElement('tr')
+
+        if(tr && i === 0 || i === 5) {
+            tr.innerHTML = `                
+                <td>${item[0]}</td>
+                <td class="value">${item[1]}</td>
+                <td class="setpoint">${item[2]}</td>                  
+            `
+        } else if (tr && i === 1) {
+            tr.innerHTML = `                
+                <td>${item[0]}</td>
+                <td class="value">${item[1]}</td>
+                <td>${item[2]}</td>                  
+            `
+        } else if (tr && i >=2 && i <=4) {
+            tr.innerHTML = `                
+                <td>${item[0]}</td>
+                <td class="value">${item[1]}</td>
+                <td class="setpoint" id="${i - 2}">${item[2]}</td>                  
+            `
+        }
+        tbl.appendChild(tr)
+    })
+    tbl.appendChild(tblBody)
+    
+    selector.appendChild(tbl)
+    tbl.appendChild(capt)
+    tbl.appendChild(tHeader)
+    tHeader.appendChild(tr)
+    
 }

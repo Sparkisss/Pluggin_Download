@@ -67,7 +67,6 @@ export async function renderTable(tempForecast: Promise<number[]>, date: string)
     const tempForecasts = await tempForecast
     // Обновление данных в массиве
     chart.data.datasets[0].data = tempForecasts // Новые значения
-
     // Обновление графика с новыми данными
     chart.update()
 }

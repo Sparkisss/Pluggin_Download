@@ -2,7 +2,7 @@ import {chancheInnerEquipment} from './weatherSlide';
 import {checkWeather} from './APIweather'
 import {renderTable} from './forecastTable'
 import {checkForecastWeather} from './APIForecast';
-import { renderErrorsList, renderListOfEquipments} from './renderValuePage';
+import { renderErrorsList, renderListOfEquipments, renderDeviceStatus} from './renderValuePage';
 
 document.addEventListener("DOMContentLoaded", () => {    
     const btnList = document.querySelector('.sidebar') as HTMLElement
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     value.classList.add('btnStyle')
     renderErrorsList()
     renderListOfEquipments(equipments)
+    renderDeviceStatus(device)
     
     btnList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement
@@ -21,14 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
             btnStyle(target)
             renderErrorsList()
             renderListOfEquipments(equipments)
-            // renderListOfEquipments(device) 
+            renderDeviceStatus(device)
         } else if (target.textContent === 'Weather') {
             chancheInnerEquipment()
             checkWeather()
             removeBtnStyle()
             btnStyle(target)
-            const articleObjectData = document.querySelector('.data_now div') as HTMLElement
-            renderTable(checkForecastWeather(articleObjectData.innerText), articleObjectData.innerText)         
+            const getDate = document.querySelector('.error_list div div') as HTMLElement
+            renderTable(checkForecastWeather(getDate.innerText), getDate.innerText) 
         }
     })
 //стили нажатой кнопки

@@ -7,15 +7,32 @@ const apiUrl =
 const articleWeatherNow = document.querySelector('.equipment') as HTMLElement
 //получаем данные
 export async function checkWeather() {
-    const response = await fetch(apiUrl)
-    const data = await response.json()
-    const entries = Object.values(data.main)
-    const windEntries = Object.values(data.wind)
-    renderWeatherNow (entries, windEntries)
+    try {
+        const response = await fetch(apiUrl)
+        if (!response.ok) {
+            throw new Error (`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        const entries = [
+            {
+                temp: data.main.temp,
+                feels_like: data.main.feels_like,
+                pressure: data.main.pressure,
+                humidity: data.main.humidity
+            }
+        ]
+        const windEntries = [{
+            speed: data.wind.speed
+        }]
+        renderWeatherNow (entries, windEntries)
+    }catch (error) {
+        console.error('There was a problem with the fetch operation:', error)
+    }
 }
 //отрисовка данных на страницу и времени
-function renderWeatherNow (dataOfWeather: unknown[], dataOfWind: unknown[]) {
+function renderWeatherNow (dataOfWeather: any[], dataOfWind: unknown[]) {
     articleWeatherNow.innerHTML = ''
+    console.log(dataOfWeather[0])
     const data = [
         {name: 'Temp:', value: dataOfWeather[0], sign: '°C'},
         {name: 'Fells like:', value: dataOfWeather[1], sign: '°C'},
