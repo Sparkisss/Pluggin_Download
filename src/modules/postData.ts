@@ -17,21 +17,22 @@ export function fetchDataFromServer() {
 }
 // отображение данных на странице
 function updatePageWithEquipment(data: Equipment[]) {
-    const test = document.querySelector('.listOfEquipments')
-    data.forEach((item) => {
-        const tr = document.createElement('tr')
-
-        if(tr) {
-            tr.innerHTML = `                
+    const equipmentList = document.querySelector('.listOfEquipments')
+    if (equipmentList) {
+        const fragment = document.createDocumentFragment()
+        data.forEach((item) => {
+            const tr = document.createElement('tr')
+            tr.innerHTML = `
                 <td>${item.product_name}</td>
                 <td>${item.Mark}</td>
-                <td>${item.State}</td>                  
-            `
-        }
-        if(test) {
-            test.appendChild(tr)
-        }       
-    })
+                <td>${item.State}</td>
+            `;
+            fragment.appendChild(tr);
+        })
+        equipmentList.appendChild(fragment);
+    } else {
+        console.error('Элемент .listOfEquipments не найден');
+    }
 }
 
 

@@ -5,6 +5,16 @@ const apiUrl =
     `https://api.openweathermap.org/data/2.5/weather?units=metric&q=brest&appid=${apiKey}`
 
 const articleWeatherNow = document.querySelector('.equipment') as HTMLElement
+
+interface WeatherData {
+    temp: number;
+    feels_like: number;
+    pressure: number;
+    humidity: number;
+}
+interface WindData {
+    speed: number;
+}
 //получаем данные
 export async function checkWeather() {
     try {
@@ -13,32 +23,29 @@ export async function checkWeather() {
             throw new Error (`HTTP error! status: ${response.status}`)
         }
         const data = await response.json()
-        const entries = [
-            {
+        const weatherData = {
                 temp: data.main.temp,
                 feels_like: data.main.feels_like,
                 pressure: data.main.pressure,
                 humidity: data.main.humidity
-            }
-        ]
-        const windEntries = [{
+        }
+        const windEntries = {
             speed: data.wind.speed
-        }]
-        renderWeatherNow (entries, windEntries)
+        }
+        renderWeatherNow (weatherData, windEntries)
     }catch (error) {
         console.error('There was a problem with the fetch operation:', error)
     }
 }
 //отрисовка данных на страницу и времени
-function renderWeatherNow (dataOfWeather: any[], dataOfWind: unknown[]) {
+function renderWeatherNow (dataOfWeather: WeatherData, dataOfWind: WindData) {
     articleWeatherNow.innerHTML = ''
-    console.log(dataOfWeather[0])
     const data = [
-        {name: 'Temp:', value: dataOfWeather[0], sign: '°C'},
-        {name: 'Fells like:', value: dataOfWeather[1], sign: '°C'},
-        {name: 'Pressure:', value: dataOfWeather[4], sign: 'Pa'},
-        {name: 'Humidity:', value: dataOfWeather[5], sign: '%'},
-        {name: 'Wind speed', value: dataOfWind[0], sign: 'm/s'},     
+        {name: 'Temp:', value: dataOfWeather.temp, sign: '°C'},
+        {name: 'Fells like:', value: dataOfWeather.feels_like, sign: '°C'},
+        {name: 'Pressure:', value: dataOfWeather.pressure, sign: 'Pa'},
+        {name: 'Humidity:', value: dataOfWeather.humidity, sign: '%'},
+        {name: 'Wind speed', value: dataOfWind.speed, sign: 'm/s'},     
     ]
     const clock: HTMLDivElement = document.createElement('div')
     const screen = document.createElement('div')    
@@ -55,10 +62,13 @@ function renderWeatherNow (dataOfWeather: any[], dataOfWind: unknown[]) {
     clock.appendChild(screen)
     screen.appendChild(time)
 
+    const fragment = document.createDocumentFragment()
+
     data.forEach(data => {
         const div = document.createElement('div')
         div.textContent = `${data.name} - ${data.value}${data.sign}`
         div.classList.add('wraps')
-        articleWeatherNow.appendChild(div)
+        fragment.appendChild(div)
     })
+    articleWeatherNow.appendChild(fragment)
 }
