@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sendButton = document.querySelector('.sendBtn') as HTMLElement
     const radioButtons: NodeListOf<HTMLInputElement> = document.querySelectorAll('input[type="radio"]')
-    const setpoint: NodeListOf<Element> = document.querySelectorAll('.setpoint')
     const adjustmentSetpoint = document.querySelectorAll('.adjustment')
     const plus = document.querySelectorAll('.plus')
     const minus = document.querySelectorAll('.minus')

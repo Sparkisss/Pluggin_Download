@@ -2,22 +2,24 @@
 const btn = document.querySelector('.styleBtn') as HTMLElement
 const wrapper = document.querySelector('.wrapper') as HTMLElement
 
-function init(themeStatus: string) {
-    wrapper.style.backgroundColor = themeStatus;
-    btn.style.backgroundColor = themeStatus;
+const lightTheme = '#faebd7';
+const darkTheme = '#000';
+const defaultTheme = lightTheme;
 
-    if (themeStatus=== '#faebd7') {
-        btn.style.color = '#000'
-    } else btn.style.color = '#fff'
+function init(themeStatus: any) {
+    if (wrapper && btn) {
+        wrapper.style.backgroundColor = themeStatus;
+        btn.style.backgroundColor = themeStatus;
+        btn.style.color = themeStatus === lightTheme ? darkTheme : lightTheme;
+    }
 }
 
-btn?.addEventListener('click', () => {
-    if (localStorage.getItem('theme') === '#000') {
-        localStorage.setItem('theme', '#faebd7')
-        init(localStorage.getItem('theme') || '#faebd7');
-    } else {
-        localStorage.setItem('theme', '#000')
-        init(localStorage.getItem('theme') || '#faebd7');
-    }   
-})
- init(localStorage.getItem('theme') || '#faebd7');
+if (btn) {
+    btn.addEventListener('click', () => {
+        const currentTheme = localStorage.getItem('theme') === darkTheme ? lightTheme : darkTheme;
+        localStorage.setItem('theme', currentTheme);
+        init(currentTheme);
+    });
+}
+
+init(localStorage.getItem('theme') || defaultTheme);

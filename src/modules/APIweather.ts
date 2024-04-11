@@ -5,6 +5,7 @@ const apiUrl =
     `https://api.openweathermap.org/data/2.5/weather?units=metric&q=brest&appid=${apiKey}`
 
 const articleWeatherNow = document.querySelector('.equipment') as HTMLElement
+const tempOnMainPage = document.querySelector('.temperature') as HTMLElement
 
 interface WeatherData {
     temp: number;
@@ -47,6 +48,7 @@ function renderWeatherNow (dataOfWeather: WeatherData, dataOfWind: WindData) {
         {name: 'Humidity:', value: dataOfWeather.humidity, sign: '%'},
         {name: 'Wind speed', value: dataOfWind.speed, sign: 'm/s'},     
     ]
+    tempOnMainPage.innerText = `Temperature outside - ${data[0].value.toString()}°C`
     const clock: HTMLDivElement = document.createElement('div')
     const screen = document.createElement('div')    
     const time = document.createElement('div')
@@ -72,3 +74,5 @@ function renderWeatherNow (dataOfWeather: WeatherData, dataOfWind: WindData) {
     })
     articleWeatherNow.appendChild(fragment)
 }
+
+

@@ -5,7 +5,6 @@ import { renderTable } from "./forecastTable"
 const articleEquipment = document.querySelector('.error_list') as HTMLElement
 const container = document.createElement('div')
 let sliderNumber: number = 0;
-let selectorDate: string = ''
 
 //создаем элементы для отображения дней недели и стрелки для управления
 export function chancheInnerEquipment() {    
@@ -25,7 +24,6 @@ export function chancheInnerEquipment() {
         articleEquipment.appendChild(arrowUp)
         articleEquipment.appendChild(container)
         addDate(container, getLastWeekDates(sliderNumber), true)
-        // addDate(articleObjectData, getLastWeekDates(sliderNumber), true)
         articleEquipment.appendChild(arrowDown)
     }
 }
@@ -35,37 +33,31 @@ export function addDate(selector: HTMLElement, dates: any, clean: boolean): void
     // Проходим по всем датам в массиве
     let dateDiv: HTMLDivElement = document.createElement('div'); // Создаем новый элемент div для даты
     dateDiv.textContent = dates; // Устанавливаем текстовое содержимое div равным текущей дате
+    const dayOfWeek = dates.split(' ')[1]; // Получаем название дня недели
+    dateDiv.innerHTML += `<br>${dayOfWeek}`; // Добавляем перенос строки и название дня недели в контейнер
     selector.appendChild(dateDiv); // Добавляем div с датой в контейнер
 }
 //логика отображения элементов
 articleEquipment.addEventListener('click', (e) => {
-    const target = e.target as HTMLImageElement
-    let flag: boolean = false
+    const target = e.target as HTMLImageElement;
+
+    const updateSlider = (increment: number) => {
+        sliderNumber += increment;
+        sliderNumber = Math.max(0, Math.min(4, sliderNumber));
+
+        const dates = getLastWeekDates(sliderNumber);
+        addDate(container, dates, true);
+
+        const getDate = document.querySelector('.error_list div div') as HTMLElement;
+        renderTable(checkForecastWeather(getDate.innerText), getDate.innerText);
+    };
 
     if (target.alt === 'up') {
-        sliderNumber += 1
-        if (sliderNumber > 4) {
-            sliderNumber = 4
-            flag = true
-        } else flag = false
-        if (!flag) {
-            addDate(container, getLastWeekDates(sliderNumber), true)
-            const getDate = document.querySelector('.error_list div div') as HTMLElement
-            renderTable(checkForecastWeather(getDate.innerText), getDate.innerText)        }
+        updateSlider(1);
+    } else if (target.alt === 'down') {
+        updateSlider(-1);
     }
-    if (target.alt === 'down') {
-        sliderNumber -= 1
-        if (sliderNumber < 0 ){
-            sliderNumber = 0
-            flag = true
-        } else flag = false
-        if (!flag) {
-            addDate(container, getLastWeekDates(sliderNumber), true)
-            const getDate = document.querySelector('.error_list div div') as HTMLElement
-            renderTable(checkForecastWeather(getDate.innerText), getDate.innerText)           
-        }
-    }
-})
+});
 
 export function getLastWeekDates(num: number) {
     const today = new Date(); 

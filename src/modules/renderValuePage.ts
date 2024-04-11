@@ -137,10 +137,8 @@ export function renderDeviceStatus(selector: HTMLElement) {
         tbl.appendChild(tr)
     })
     tbl.appendChild(tblBody)
-    
     selector.appendChild(tbl)
     tbl.appendChild(capt)
     tbl.appendChild(tHeader)
     tHeader.appendChild(tr)
-    
 }
